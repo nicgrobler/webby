@@ -20,9 +20,9 @@ type HTTPServer struct {
 }
 
 // NewHTTPServer takes a valid address - can be of form IP:Port, or :Port - and returns a server
-func NewHTTPServer(description, address string, idleConnectionTimeout int) *HTTPServer {
+func NewHTTPServer(description, address string, idleConnectionTimeout time.Duration) *HTTPServer {
 	s := &HTTPServer{Slug: description, Address: address, Done: make(chan error), router: http.NewServeMux()}
-	s.setListener(&http.Server{Addr: address, Handler: s.router, IdleTimeout: time.Duration(idleConnectionTimeout)})
+	s.setListener(&http.Server{Addr: address, Handler: s.router, IdleTimeout: idleConnectionTimeout})
 	return s
 }
 
